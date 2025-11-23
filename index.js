@@ -1,3 +1,78 @@
+// index.js
+
+import supabase from './supabase.js'; // Importa o cliente Supabase
+
+// Remova a matriz partnersData fixa, ou comente-a:
+// const partnersData = [ { ... }, { ... } ];
+
+let partnersData = []; // Inicializamos a matriz vazia
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // ... todas as suas definições de DOM e variáveis ...
+    const partnersGrid = document.getElementById('partners-grid');
+    const searchInput = document.getElementById('search-input');
+    // ... etc ...
+
+    let activeSegment = 'Todos';
+
+    // --- NOVO: FUNÇÃO DE BUSCA NO SUPABASE ---
+    const fetchPartners = async () => {
+        const { data, error } = await supabase
+            .from('parceiros') // A tabela que criamos
+            .select('*'); // Seleciona todas as colunas
+
+        if (error) {
+            console.error('Erro ao buscar parceiros:', error);
+            partnersGrid.innerHTML = '<p>Erro ao carregar parceiros. Tente novamente mais tarde.</p>';
+            return [];
+        }
+
+        // Se houver dados, atribui à variável global e retorna
+        partnersData = data; 
+        return data;
+    };
+    // ------------------------------------------
+
+    // --- RENDER FUNCTIONS (Não precisam de grandes mudanças) --- 
+    const renderCards = (partners) => { /* ... sua função atual ... */ };
+    const renderCarousel = () => { /* ... sua função atual (agora usa partnersData global) ... */ };
+    const renderFilters = () => { /* ... sua função atual ... */ };
+    const filterAndRender = () => { /* ... sua função atual ... */ };
+    const openModal = (partner) => { /* ... sua função atual ... */ };
+    const closeModal = () => { /* ... sua função atual ... */ };
+    // ... seus event listeners ...
+
+    // --- NOVO: FUNÇÃO DE INICIALIZAÇÃO ONDE OBTEMOS OS DADOS ---
+    async function initializeApp() {
+        await fetchPartners(); // 1. Busca os dados
+        renderCarousel();       // 2. Renderiza o carrossel
+        renderFilters();        // 3. Renderiza os filtros (baseado nos dados)
+        filterAndRender();      // 4. Renderiza o grid principal
+    }
+
+    // --- Inicialização ---
+    // Substitua a chamada antiga pelas novas:
+    // renderCarousel();
+    // renderFilters();
+    // filterAndRender();
+
+    initializeApp(); // Chama a função que inicia a busca e renderiza
+
+    // Seu código de Event Listeners aqui:
+    searchInput.addEventListener('input', filterAndRender);
+    cityFilter.addEventListener('change', filterAndRender);
+    closeModalButton.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Certifique-se de que todas as suas funções internas (renderCards, renderCarousel, etc.) 
+    // AGORA usem a matriz partnersData (que está sendo preenchida pelo fetchPartners).
+});
+
+
 const partnersData = [
 {
         id: 1,
