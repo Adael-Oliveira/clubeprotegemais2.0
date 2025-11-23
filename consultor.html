@@ -1,1 +1,100 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Consultor - ProtegeMais</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="imagens/site/logoprotegemais.png" alt="logoprotegemais">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <button id="auth-action-btn" class="btn-consultor">Entrar</button>
+        </nav>
+    </header>
+
+    <main class="section-container">
+        
+        <section id="auth-section" class="consultor-container" style="display: none;">
+            <h2>Acesso do Consultor</h2>
+            <div id="auth-message" class="message error" style="display: none;"></div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-action">Fazer Login</button>
+            </form>
+        </section>
+
+
+        <section id="crud-section" class="consultor-container" style="display: none; max-width: 800px;">
+            <h2>Gerenciar Meus Parceiros</h2>
+            
+            <form id="partner-form">
+                <input type="hidden" id="partner-id"> 
+
+                <div class="form-group">
+                    <label for="partner-name">Nome do Parceiro</label>
+                    <input type="text" id="partner-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="partner-segment">Segmento</label>
+                    <input type="text" id="partner-segment" required>
+                </div>
+                <div class="form-group">
+                    <label for="partner-description">Descrição</label>
+                    <textarea id="partner-description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="partner-address">Endereço Completo</label>
+                    <input type="text" id="partner-address">
+                </div>
+                <div class="form-group">
+                    <label for="partner-city">Cidade e Estado</label>
+                    <input type="text" id="partner-city">
+                </div>
+                <div class="form-group">
+                    <label for="partner-phone">Telefone (WhatsApp)</label>
+                    <input type="tel" id="partner-phone">
+                </div>
+                <div class="form-group">
+                    <label for="partner-horario">Horário de Funcionamento (Ex: 09:00-17:00)</label>
+                    <input type="text" id="partner-horario">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn-action">Salvar Parceiro</button>
+                </div>
+            </form>
+            
+            <hr style="margin: 30px 0;">
+
+            <h3>Meus Parceiros Cadastrados</h3>
+            <div id="partners-list" style="margin-top: 20px;">
+            </div>
+            <div id="list-message" class="message error" style="display: none;"></div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="supabase.js"></script>
+    <script type="module" src="consultor.js"></script>
+</body>
+</html>
